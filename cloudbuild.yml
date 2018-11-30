@@ -1,4 +1,11 @@
 steps:
 - name: gcr.io/cloud-builders/git
   args: ['fetch', '--unshallow']
+- name: "gcr.io/cloud-builders/gcloud"
+  args:
+  - app
+  - deploy
+  - "go/src/${_APP}"
+  env:
+  - "GOPATH=go"
 timeout: "1600s"
