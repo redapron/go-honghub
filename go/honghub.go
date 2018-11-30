@@ -7,7 +7,7 @@ import (
 )
 
 func MessageReceive(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello World! is updated")
+	fmt.Fprintf(w, "Hello World! is updated at 22:37")
 
 	byt, err := ioutil.ReadAll(r.Body)
 	if err != nil {
