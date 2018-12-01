@@ -56,6 +56,20 @@ var routes = Routes{
 		MessageReceive,
 	},
 
+	{
+		"",
+		"POST",
+		"/room/add",
+		RoomAdd,
+	},
+
+	{
+		"",
+		"GET",
+		"/rooms",
+		ListRoom,
+	},
+
 	Route{
 		"Index",
 		"GET",
