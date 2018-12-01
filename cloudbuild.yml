@@ -11,7 +11,7 @@ steps:
   args:
   - app
   - deploy
-  - "go/src/${_APP}"
+  - "/workspace/gopath/src/go-honghub"
   env:
   - "GOPATH=go"
 timeout: "1600s"
