@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/line/line-bot-sdk-go/linebot"
 )
@@ -102,19 +103,20 @@ func ReplyMessage(rs MessageFromLine, r *http.Request) {
 	for _, event := range rs.Event {
 		fmt.Println("Test: ", event.Type)
 		if event.Message.Type == "text" {
-			// var messages []linebot.Message
-			fmt.Println("Test: ")
-			// append some message to messages
-			leftBtn := linebot.NewMessageAction("left", "left clicked")
-			rightBtn := linebot.NewMessageAction("right", "right clicked")
-			template := linebot.NewConfirmTemplate("Hello World", leftBtn, rightBtn)
-
-			message := linebot.NewTemplateMessage("นาย หล่อมาก ", template)
+			var message linebot.SendingMessage
+			if strings.Index(event.Message.Text, "นุ่น") >= 0 {
+				leftBtn := linebot.NewMessageAction("left", "จองห้อง")
+				rightBtn := linebot.NewMessageAction("right", "ทักทาย")
+				template := linebot.NewConfirmTemplate("สวัสดีคุณ ... , นุ่นคือบอทที่จะช่วยให้คุณจองห้องประชุมได้ง่ายๆ ^^", leftBtn, rightBtn)
+				message = linebot.NewTemplateMessage("", template)
+			} else if strings.Index(event.Message.Text, "ห้อง") >= 0 || strings.Index(event.Message.Text, "จอง") >= 0 {
+				message = linebot.NewTextMessage("กรุณาพิมพ์หมายเลขเพื่อเลือกประเภทห้องประชุมค่ะ 1.ห้อง Whiteboard 2.ห้อง Video conference 3.ห้อง Project")
+			} else {
+				message = linebot.NewTextMessage("นุ่นต้องขอโทษด้วยค่ะ นุ่นไม่เข้าใจ")
+			}
 			_, err := bot.ReplyMessage(event.ReplyToken, message).Do()
 			if err != nil {
-				// Do something when some bad happened
 				fmt.Println("DDDDDD2: ", err)
-
 			}
 		}
 	}
