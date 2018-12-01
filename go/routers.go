@@ -98,6 +98,13 @@ var routes = Routes{
 		ListSchedule,
 	},
 
+	{
+		"",
+		"POST",
+		"/schedules/filter",
+		FilterSchedule,
+	},
+
 	Route{
 		"Index",
 		"GET",
