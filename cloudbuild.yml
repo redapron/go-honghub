@@ -1,6 +1,6 @@
 steps:
 - name: gcr.io/cloud-builders/git
-  args: ['clone', 'https://github.com/redapron/go-honghub.git']
+  args: ['clone', 'https://github.com/redapron/go-honghub.git', '/gopath/src/go-honghub']
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy']
   env: ['GOPATH=/gopath']
