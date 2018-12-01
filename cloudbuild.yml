@@ -1,11 +1,17 @@
 steps:
 - name: gcr.io/cloud-builders/git
   args: ['fetch', '--unshallow']
+- name: 'gcr.io/cloud-builders/go'
+  args: ['install', '.']
+  env: ['PROJECT_ROOT=go-honghub']
+- name: 'gcr.io/cloud-builders/go'
+  args: ['build', 'hello']
+  env: ['PROJECT_ROOT=go-honghub']
 - name: "gcr.io/cloud-builders/gcloud"
   args:
   - app
   - deploy
-  - "go/src/${_APP}"
+  - "go/src/go-honghub"
   env:
   - "GOPATH=go"
 timeout: "1600s"
