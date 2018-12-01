@@ -31,6 +31,13 @@ func main() {
 
 	router := sw.NewRouter()
 
-	handler := cors.AllowAll().Handler(router)
+	handler := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "PUT", "PATCH", "POST", "DELETE"},
+		ExposedHeaders:   []string{"Content-Length"},
+		AllowedHeaders:   []string{"*"},
+		AllowCredentials: true,
+		MaxAge:           12 * 60 * 60,
+	}).Handler(router)
 	log.Fatal(http.ListenAndServe(":8080", handler))
 }
