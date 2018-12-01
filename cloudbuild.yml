@@ -3,4 +3,5 @@ steps:
   args: ['clone', 'https://github.com/redapron/go-honghub.git']
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy']
+  env: ['GOPATH=/gopath']
 timeout: "1600s"
