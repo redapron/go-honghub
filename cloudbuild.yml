@@ -3,7 +3,7 @@ steps:
   args: ['fetch', '--unshallow']
   volumes:
   - name: 'go'
-    path: '/gopath'
+    path: '/gopath/src'
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy']
   env: ['GOPATH=/gopath']
