@@ -1,6 +1,9 @@
 steps:
 - name: gcr.io/cloud-builders/git
   args: ['fetch', '--unshallow']
+  volumes:
+  - name: 'go'
+    path: '/gopath'
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy']
   env: ['GOPATH=/gopath']
