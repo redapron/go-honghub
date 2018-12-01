@@ -43,6 +43,18 @@ func NewRouter() *mux.Router {
 	return router
 }
 
+func Allow(inner http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("Enable Cors")
+		enableCors(&w)
+		inner.ServeHTTP(w, r)
+	})
+}
+
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
+
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello World!")
 }
