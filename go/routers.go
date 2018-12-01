@@ -70,6 +70,21 @@ var routes = Routes{
 		ListRoom,
 	},
 
+	// Schedule
+	{
+		"",
+		"POST",
+		"/schedule/add",
+		AddSchedule,
+	},
+
+	{
+		"",
+		"GET",
+		"/schedules",
+		ListSchedule,
+	},
+
 	Route{
 		"Index",
 		"GET",
