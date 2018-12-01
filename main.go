@@ -14,6 +14,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/rs/cors"
+
 	// WARNING!
 	// Change this to a fully-qualified import path
 	// once you place this file into your project.
@@ -29,5 +31,6 @@ func main() {
 
 	router := sw.NewRouter()
 
-	log.Fatal(http.ListenAndServe(":8080", router))
+	handler := cors.AllowAll().Handler(router)
+	log.Fatal(http.ListenAndServe(":8080", handler))
 }
