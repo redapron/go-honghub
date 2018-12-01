@@ -78,10 +78,10 @@ func googleInit() {
 }
 
 type Room struct {
-	Building string `firestore:"building"",omitempty"`
-	Type     string `firestore:"type"",omitempty"`
-	Capacity int    `firestore:"capacity"",omitempty"`
-	Name     string `firestore:"name"",omitempty"`
+	Building string `firestore:"building,omitempty"`
+	Type     string `firestore:"type,omitempty"`
+	Capacity int    `firestore:"capacity,omitempty"`
+	Name     string `firestore:"name,omitempty"`
 }
 
 // ===== ADD
