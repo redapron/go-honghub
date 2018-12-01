@@ -108,7 +108,7 @@ func ReplyMessage(rs MessageFromLine, r *http.Request) {
 				leftBtn := linebot.NewMessageAction("จองห้องหน่อยสิ", "จองห้อง")
 				rightBtn := linebot.NewMessageAction("มาทักทาย", "ทักทาย")
 				template := linebot.NewConfirmTemplate("สวัสดีคุณ ... , นุ่นคือบอทที่จะช่วยให้คุณจองห้องประชุมได้ง่ายๆ ^^", leftBtn, rightBtn)
-				message = linebot.NewTemplateMessage("", template)
+				message = linebot.NewTemplateMessage("นุ่นกล่าวทักทาย", template)
 			} else if strings.Index(event.Message.Text, "2") >= 0 {
 				message = linebot.NewTextMessage("ไม่ทราบว่าคุณ...ต้องการประชุมที่ตึกไหนคะ ").
 					WithQuickReplies(linebot.NewQuickReplyItems(
@@ -149,12 +149,12 @@ func ReplyMessage(rs MessageFromLine, r *http.Request) {
 
 			} else if strings.Index(event.Message.Text, "5") >= 0 {
 				template := linebot.NewButtonsTemplate(
-					"", "", "ช่วงเวลาไหนคะ",
+					"", "", "ช่วงเวลาไหนคะ2",
 					linebot.NewDatetimePickerAction("date", "DATE", "date", "", "", ""),
 					linebot.NewDatetimePickerAction("time", "TIME", "time", "", "", ""),
 					linebot.NewDatetimePickerAction("datetime", "DATETIME", "datetime", "", "", ""),
 				)
-				message = linebot.NewTemplateMessage("", template)
+				message = linebot.NewTemplateMessage("ช่วงเวลาไหนคะ", template)
 
 			} else {
 				message = linebot.NewTextMessage("นุ่นต้องขอโทษด้วยค่ะ นุ่นไม่เข้าใจ")
