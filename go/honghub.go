@@ -104,13 +104,58 @@ func ReplyMessage(rs MessageFromLine, r *http.Request) {
 		fmt.Println("Test: ", event.Type)
 		if event.Message.Type == "text" {
 			var message linebot.SendingMessage
-			if strings.Index(event.Message.Text, "นุ่น") >= 0 {
-				leftBtn := linebot.NewMessageAction("left", "จองห้อง")
-				rightBtn := linebot.NewMessageAction("right", "ทักทาย")
+			if strings.Index(event.Message.Text, "1") >= 0 {
+				leftBtn := linebot.NewMessageAction("จองห้องหน่อยสิ", "จองห้อง")
+				rightBtn := linebot.NewMessageAction("มาทักทาย", "ทักทาย")
 				template := linebot.NewConfirmTemplate("สวัสดีคุณ ... , นุ่นคือบอทที่จะช่วยให้คุณจองห้องประชุมได้ง่ายๆ ^^", leftBtn, rightBtn)
 				message = linebot.NewTemplateMessage("", template)
-			} else if strings.Index(event.Message.Text, "ห้อง") >= 0 || strings.Index(event.Message.Text, "จอง") >= 0 {
-				message = linebot.NewTextMessage("กรุณาพิมพ์หมายเลขเพื่อเลือกประเภทห้องประชุมค่ะ 1.ห้อง Whiteboard 2.ห้อง Video conference 3.ห้อง Project")
+			} else if strings.Index(event.Message.Text, "2") >= 0 {
+				message = linebot.NewTextMessage("ไม่ทราบว่าคุณ...ต้องการประชุมที่ตึกไหนคะ ").
+					WithQuickReplies(linebot.NewQuickReplyItems(
+						linebot.NewQuickReplyButton(
+							"",
+							linebot.NewMessageAction("ตึกแจ้ง 1", "ตึกแจ้ง 1")),
+						linebot.NewQuickReplyButton(
+							"",
+							linebot.NewMessageAction("KBTG", "KBTG")),
+					))
+
+			} else if strings.Index(event.Message.Text, "3") >= 0 || strings.Index(event.Message.Text, "3") >= 0 {
+				message = linebot.NewTextMessage("กรุณาพิมพ์หมายเลขเพื่อเลือกประเภทห้องประชุมค่ะ ").
+					WithQuickReplies(linebot.NewQuickReplyItems(
+						linebot.NewQuickReplyButton(
+							"",
+							linebot.NewMessageAction("ห้อง Whiteboard", "ห้อง Whiteboard")),
+						linebot.NewQuickReplyButton(
+							"",
+							linebot.NewMessageAction("ห้อง Video conference", "ห้อง Video conference")),
+						linebot.NewQuickReplyButton(
+							"",
+							linebot.NewMessageAction("ห้อง Project", "ห้อง Project")),
+					))
+			} else if strings.Index(event.Message.Text, "4") >= 0 {
+				message = linebot.NewTextMessage("ไม่ทราบว่าคุณ...ต้องการจองห้องไหนคะ").
+					WithQuickReplies(linebot.NewQuickReplyItems(
+						linebot.NewQuickReplyButton(
+							"",
+							linebot.NewMessageAction("ห้อง 1", "ห้อง 1")),
+						linebot.NewQuickReplyButton(
+							"",
+							linebot.NewMessageAction("ห้อง 2", "ห้อง 2")),
+						linebot.NewQuickReplyButton(
+							"",
+							linebot.NewMessageAction("ห้อง 3", "ห้อง 3")),
+					))
+
+			} else if strings.Index(event.Message.Text, "5") >= 0 {
+				template := linebot.NewButtonsTemplate(
+					"", "", "ช่วงเวลาไหนคะ",
+					linebot.NewDatetimePickerAction("date", "DATE", "date", "", "", ""),
+					linebot.NewDatetimePickerAction("time", "TIME", "time", "", "", ""),
+					linebot.NewDatetimePickerAction("datetime", "DATETIME", "datetime", "", "", ""),
+				)
+				message = linebot.NewTemplateMessage("", template)
+
 			} else {
 				message = linebot.NewTextMessage("นุ่นต้องขอโทษด้วยค่ะ นุ่นไม่เข้าใจ")
 			}
