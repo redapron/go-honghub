@@ -1,6 +1,6 @@
 steps:
 - name: gcr.io/cloud-builders/git
-  args: ['fetch', '--unshallow']
+  args: ['clone', 'https://github.com/redapron/go-honghub.git']
   volumes:
   - name: 'go'
     path: '/gopath/src'
