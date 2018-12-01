@@ -103,3 +103,7 @@ func listRoom() []Room {
 	fmt.Printf("rooms: %+v", rooms)
 	return rooms
 }
+
+func ListAllRoomTypes(w http.ResponseWriter, r *http.Request) {
+	JSONResponse(w, http.StatusOK, []string{"video conference", "projector", "whiteboard"})
+}

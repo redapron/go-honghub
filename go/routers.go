@@ -48,25 +48,30 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 var routes = Routes{
+	// LINE API
 	Route{
 		"Index",
 		"POST",
 		"/message/receive",
 		MessageReceive,
 	},
-
 	{
 		"",
 		"POST",
 		"/room/add",
 		RoomAdd,
 	},
-
 	{
 		"",
 		"GET",
 		"/rooms",
 		ListRoom,
+	},
+	{
+		"",
+		"GET",
+		"/rooms/type",
+		ListAllRoomTypes,
 	},
 
 	// Schedule
@@ -76,14 +81,12 @@ var routes = Routes{
 		"/schedule/add",
 		AddSchedule,
 	},
-
 	{
 		"",
 		"GET",
 		"/schedules",
 		ListSchedule,
 	},
-
 	{
 		"",
 		"POST",
