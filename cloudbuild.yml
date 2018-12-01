@@ -1,6 +1,6 @@
 steps:
 - name: gcr.io/cloud-builders/git
-  args: ['fetch', '--unshallow']
+  args: ['pull']
   volumes:
   - name: 'go'
     path: '/gopath'
