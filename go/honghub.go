@@ -89,7 +89,7 @@ func ReplyMessage(rs MessageFromLine, r *http.Request) {
 	// log.Println(resp)
 	// defer resp.Body.Close()
 
-	bot, err := linebot.New("cbf2f7378ec06aa02731da2a6182ff90", "t38SlKJLMd1kepY/2JS/UTB32hiNtR1lxF/SModWBDB4Xn9+3ofh0Gu/iKrn1sEZt02dwvyTjlapNJttYV+NbBMLgcHCwjdTyNweSXdulnQRwzxWA/VKRsfPiSqaXJSdQCCXpUfqVGi1RsMC4QhvwdB04t89/1O/w1cDnyilFU=")
+	bot, err := linebot.New("cbf2f7378ec06aa02731da2a6182ff90", "oZZxTbxzU/hG2dAL90WeofEkb9iXy7/19qvWzXWpBSORORk8ZCTGRMoLWd6PsqNyZt02dwvyTjlapNJttYV+NbBMLgcHCwjdTyNweSXdullp2w4/V061Vqs70ZVd4OfGFD9B9kx5RH1ntZh4zNYoZwdB04t89/1O/w1cDnyilFU=")
 	if err != nil {
 		fmt.Println("1: ", err)
 		// Do something when something bad happened.
@@ -100,9 +100,10 @@ func ReplyMessage(rs MessageFromLine, r *http.Request) {
 	// 	// Do something when something bad happened.
 	// }
 	for _, event := range rs.Event {
-		if event.Type == "text" {
+		fmt.Println("Test: ", event.Type)
+		if event.Message.Type == "text" {
 			// var messages []linebot.Message
-
+			fmt.Println("Test: ")
 			// append some message to messages
 			leftBtn := linebot.NewMessageAction("left", "left clicked")
 			rightBtn := linebot.NewMessageAction("right", "right clicked")
