@@ -94,13 +94,13 @@ func ReplyMessage(rs MessageFromLine, r *http.Request) {
 		fmt.Println("1: ", err)
 		// Do something when something bad happened.
 	}
-	events, err := bot.ParseRequest(r)
-	if err != nil {
-		fmt.Println("2: ", err)
-		// Do something when something bad happened.
-	}
-	for _, event := range events {
-		if event.Type == linebot.EventTypeMessage {
+	// events, err := bot.ParseRequest(r)
+	// if err != nil {
+	// 	fmt.Println("2: ", err)
+	// 	// Do something when something bad happened.
+	// }
+	for _, event := range rs.Event {
+		if event.Type == "text" {
 			// var messages []linebot.Message
 
 			// append some message to messages
