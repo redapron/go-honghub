@@ -5,7 +5,7 @@ steps:
   args: ['install', '.']
   env: ['PROJECT_ROOT=go-honghub']
 - name: 'gcr.io/cloud-builders/go'
-  args: ['build', 'hello']
+  args: ['build', 'go-honghub']
   env: ['PROJECT_ROOT=go-honghub']
 - name: "gcr.io/cloud-builders/gcloud"
   args:
