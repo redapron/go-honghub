@@ -47,7 +47,7 @@ func MessageReceive(w http.ResponseWriter, r *http.Request) {
 		JSONResponse(w, http.StatusOK, nil)
 	}
 
-	fmt.Println("raw body", string(byt))
+	// fmt.Println("raw body", string(byt))
 	ReplyMessage(rs)
 	JSONResponse(w, http.StatusOK, nil)
 }
