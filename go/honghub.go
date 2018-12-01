@@ -1,7 +1,7 @@
 package swagger
 
 import (
-	json "encoding/json"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
@@ -45,6 +45,7 @@ func MessageReceive(w http.ResponseWriter, r *http.Request) {
 	err := decoder.Decode(&rs)
 	if err != nil {
 		JSONResponse(w, http.StatusOK, nil)
+		return
 	}
 
 	// fmt.Println("raw body", string(byt))
