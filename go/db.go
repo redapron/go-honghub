@@ -78,20 +78,27 @@ func googleInit() {
 }
 
 type Room struct {
-	Name     string `firestore:"name"`
-	Capacity int    `firestore:"capacity"`
-	Type     string `firestore:"type"`
+	Building string `firestore:"building"",omitempty"`
+	Type     string `firestore:"type"",omitempty"`
+	Capacity int    `firestore:"capacity"",omitempty"`
+	Name     string `firestore:"name"",omitempty"`
 }
 
+// ===== ADD
 func RoomAdd(w http.ResponseWriter, r *http.Request) {
+	decoder := json.NewDecoder(r.Body)
+	var rm Room
+	err := decoder.Decode(&rm)
+	if err != nil {
+		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	addRoom(rm)
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-
-	addRoom(Room{
-		Name:     "columbus",
-		Capacity: 5,
-		Type:     "video conference",
-	})
 }
 
 func addRoom(rm Room) {
@@ -119,12 +126,12 @@ func addRoom(rm Room) {
 	// [END fs_add_data_1]
 }
 
+// ===== LIST
 func ListRoom(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
 	json.NewEncoder(w).Encode(listRoom())
-
 }
 
 func listRoom() []Room {
@@ -158,9 +165,10 @@ func listRoom() []Room {
 		fmt.Println(doc.Data())
 
 		rm := Room{
+			Building: doc.Data()["building"].(string),
 			Type:     doc.Data()["type"].(string),
-			Name:     doc.Data()["name"].(string),
 			Capacity: int(doc.Data()["capacity"].(int64)),
+			Name:     doc.Data()["name"].(string),
 		}
 		rooms = append(rooms, rm)
 	}
