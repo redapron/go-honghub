@@ -86,6 +86,30 @@ type Room struct {
 	Name     string `firestore:"name,omitempty" json:"name,omitempty"`
 }
 
+type Response struct {
+	MessageCode        string      `json:"messageCode,omitempty"`
+	MessageDescription string      `json:"messageDescription,omitempty"`
+	Data               interface{} `json:"data,omitempty"`
+}
+
+func JSONResponse(w http.ResponseWriter, code int, data interface{}) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(code)
+	if data != nil {
+		json.NewEncoder(w).Encode(Response{
+			MessageCode:        "00",
+			MessageDescription: "StatusOK",
+			Data:               data,
+		})
+	} else {
+		json.NewEncoder(w).Encode(Response{
+			MessageCode:        "00",
+			MessageDescription: "StatusOK",
+		})
+	}
+	return
+}
+
 // ===== ADD
 func RoomAdd(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
@@ -98,9 +122,7 @@ func RoomAdd(w http.ResponseWriter, r *http.Request) {
 	}
 
 	addRoom(rm)
-
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
+	JSONResponse(w, http.StatusOK, nil)
 }
 
 func addRoom(rm Room) {
@@ -130,10 +152,7 @@ func addRoom(rm Room) {
 
 // ===== LIST
 func ListRoom(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
-
-	json.NewEncoder(w).Encode(listRoom())
+	JSONResponse(w, http.StatusOK, listRoom())
 }
 
 func listRoom() []Room {
