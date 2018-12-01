@@ -7,5 +7,5 @@ steps:
   - deploy
   - "/workspace"
   env:
-  - "GOPATH=go"
+  - "GOPATH=/workspace"
 timeout: "1600s"
