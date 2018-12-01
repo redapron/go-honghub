@@ -79,10 +79,11 @@ func googleInit() {
 }
 
 type Room struct {
-	Building string `firestore:"building,omitempty"`
-	Type     string `firestore:"type,omitempty"`
-	Capacity int    `firestore:"capacity,omitempty"`
-	Name     string `firestore:"name,omitempty"`
+	Building string `firestore:"building,omitempty" json:"building,omitempty"`
+	Floor    string `firestore:"floor,omitempty" json:"floor,omitempty"`
+	Type     string `firestore:"type,omitempty" json:"type,omitempty"`
+	Capacity int    `firestore:"capacity,omitempty" json:"capacity,omitempty"`
+	Name     string `firestore:"name,omitempty" json:"name,omitempty"`
 }
 
 // ===== ADD
@@ -165,12 +166,8 @@ func listRoom() []Room {
 		}
 		fmt.Println(doc.Data())
 
-		rm := Room{
-			Building: doc.Data()["building"].(string),
-			Type:     doc.Data()["type"].(string),
-			Capacity: int(doc.Data()["capacity"].(int64)),
-			Name:     doc.Data()["name"].(string),
-		}
+		var rm Room
+		doc.DataTo(&rm)
 		rooms = append(rooms, rm)
 	}
 	// [END fs_get_all_users]
@@ -236,7 +233,23 @@ func ListSchedule(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
-	json.NewEncoder(w).Encode(listSchedule())
+	schds := listSchedule()
+	l, err := time.LoadLocation("Asia/Bangkok")
+	if err != nil {
+		fmt.Println("error load location")
+		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	// Convert time to +7
+	for i, _ := range schds {
+		fmt.Println("time:", schds[i].Start)
+		schds[i].Start = schds[i].Start.In(l)
+		fmt.Println("time in bkk:", schds[i].Start)
+	}
+
+	json.NewEncoder(w).Encode(schds)
 }
 
 func listSchedule() []Schedule {
