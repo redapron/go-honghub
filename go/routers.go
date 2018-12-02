@@ -73,6 +73,12 @@ var routes = Routes{
 		"/rooms/type",
 		ListAllRoomTypes,
 	},
+	{
+		"",
+		"POST",
+		"/rooms/search",
+		SearchRoom,
+	},
 
 	// Schedule
 	{
