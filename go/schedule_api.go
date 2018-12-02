@@ -14,6 +14,7 @@ import (
 
 // ===== Schedule
 type Schedule struct {
+	ID        string        `firestore:"id,omitempty" json:"id,omitempty"`
 	Name      string        `firestore:"name,omitempty" json:"name,omitempty"`
 	MobileNo  string        `firestore:"mobile_no,omitempty" json:"mobile_no,omitempty"`
 	Topic     string        `firestore:"topic,omitempty" json:"topic,omitempty"`
@@ -107,7 +108,7 @@ func listSchedule() []Schedule {
 
 	// [START fs_get_all_users]
 	iter := client.Collection("schedules").Documents(ctx)
-	scheds := []Schedule{}
+	var scheds []Schedule
 	for {
 		doc, err := iter.Next()
 		if err == iterator.Done {
@@ -120,6 +121,7 @@ func listSchedule() []Schedule {
 
 		var sd Schedule
 		doc.DataTo(&sd)
+		sd.ID = doc.Ref.ID
 		scheds = append(scheds, sd)
 	}
 	// [END fs_get_all_users]
