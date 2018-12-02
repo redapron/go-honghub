@@ -153,7 +153,8 @@ func searchRoom(search SearchRequest) (bool, []Room) {
 	// [END fs_initialize]
 
 	// [START fs_get_all_users]
-	query := client.Collection("rooms").Where("capacity", ">=", search.Capacity).Where("type", "==", "whiteboard")
+	// bui: cannot query by both type, and capacity in single query, don't know why.
+	query := client.Collection("rooms").Where("capacity", ">=", search.Capacity)
 	iter := query.Documents(ctx)
 
 	rooms := []Room{}
@@ -169,6 +170,10 @@ func searchRoom(search SearchRequest) (bool, []Room) {
 
 		var room Room
 		doc.DataTo(&room)
+
+		if room.Type != search.Type {
+			continue
+		}
 		rooms = append(rooms, room)
 	}
 	// [END fs_get_all_users]
