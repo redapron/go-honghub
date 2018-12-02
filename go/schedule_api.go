@@ -209,6 +209,7 @@ func filterSchedule(begin, end time.Time) []Schedule {
 
 		var sd Schedule
 		doc.DataTo(&sd)
+		sd.ID = doc.Ref.ID
 		scheds = append(scheds, sd)
 	}
 	// [END fs_get_all_users]

@@ -12,6 +12,7 @@ import (
 )
 
 type Room struct {
+	ID       string `firestore:"id,omitempty" json:"id,omitempty"`
 	Building string `firestore:"building,omitempty" json:"building,omitempty"`
 	Floor    string `firestore:"floor,omitempty" json:"floor,omitempty"`
 	Type     string `firestore:"type,omitempty" json:"type,omitempty"`
@@ -96,6 +97,7 @@ func listRoom() []Room {
 
 		var rm Room
 		doc.DataTo(&rm)
+		rm.ID = doc.Ref.ID
 		rooms = append(rooms, rm)
 	}
 	// [END fs_get_all_users]
@@ -174,6 +176,8 @@ func searchRoom(search SearchRequest) (bool, []Room) {
 		if room.Type != search.Type {
 			continue
 		}
+
+		room.ID = doc.Ref.ID
 		rooms = append(rooms, room)
 	}
 	// [END fs_get_all_users]
